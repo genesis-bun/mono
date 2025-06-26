@@ -1,0 +1,1 @@
+export { default, type ExampleType } from "./example.route";
