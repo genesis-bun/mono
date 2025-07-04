@@ -1,13 +1,12 @@
-import { serve } from "bun";
 import hono from "./api";
 import html from "./src/index.html";
-import { isProd } from "env";
+import { serve } from "bun";
 
 const server = serve({
-  development: !isProd ? {
+  development: {
     hmr: true,
     console: true,
-  } : false,
+  },
 
   idleTimeout: 60,
 
@@ -54,5 +53,5 @@ const server = serve({
   },
 });
 
-!isProd && console.log(`Dev server running at ${server.url} 🚀`);
-isProd && console.log(`BUN VERSION: ${Bun.version}`);
+console.log(`Dev server running at ${server.url} 🚀`);
+console.log(`BUN VERSION: ${Bun.version}`);

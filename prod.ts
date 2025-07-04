@@ -1,8 +1,8 @@
 import dist from "./dist/index.html";
-import { serve } from "bun";
 import hono from "./api";
-import { existsSync } from "fs";
 import path from "path";
+import { serve } from "bun";
+import { existsSync } from "fs";
 import { getMimeType } from "./utils";
 
 const server = serve({

@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?&family=Manrope:wght@200..800&&&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
@@ -104,9 +102,9 @@
   --grey-950: #0a0a0a;
 }
 
-@theme inline {
-  --font-manrope: "Manrope", sans-serif;
-  --font-open-sans: "Open Sans", sans-serif;
+@theme {
+  --font-manrope: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  
   --color-grey-50: var(--grey-50);
   --color-grey-100: var(--grey-100);
   --color-grey-200: var(--grey-200);
@@ -179,11 +177,11 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 font-manrope;
     scrollbar-width: thin;
   }
   body {
-    @apply bg-background text-foreground font-manrope;
+    @apply bg-background text-foreground;
   }
   h1, h2, h3 {
     @apply font-semibold;
