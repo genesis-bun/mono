@@ -44,12 +44,14 @@ export default function HomePage() {
                     scale: { type: "spring", visualDuration: 0.2, bounce: 0.5 },
                 }}
                 className={cn(
-                    "rounded-full @lg/main:size-100 size-50 bg-amber-500",
+                    "rounded-full @lg/main:size-100 size-50 object-cover bg-amber-500",
                     status === "success" && "bg-green-500",
                     error && "bg-red-500",
                 )}
                 onClick={() => { setBears(bears + 1); mutate(); }}
             />
+
+            <h1 className="text-4xl font-bold">Hello World!</h1>
 
             <motion.div
                 initial={{
@@ -59,15 +61,13 @@ export default function HomePage() {
                     opacity: 1
                 }}
                 className={cn(
-                    "mt-10 font-mono text-4xl font-bold tracking-widest text-amber-500",
+                    "mt-10 font-mono text-4xl font-bold tracking-widest text-amber-600",
                     status === "success" && "text-green-500",
                     error && "text-red-500"
                 )}
             >
                 {bears}
             </motion.div>
-
-            <img src="/static/img.png" alt="Image" className="rounded-full size-24 object-cover" />
 
             <div className="flex gap-2">
                 <Button

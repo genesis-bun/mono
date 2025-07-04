@@ -4,17 +4,20 @@ import {
   createRoute,
   createRootRoute,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { withPageErrorBoundary } from "@/src/lib/components/errors/PageErrorBoundary";
 import HomePage from "./home";
+import { useAnalytics } from '../lib/hooks/use-analytics';
 
 const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      {/* <TanStackRouterDevtools /> */}
-    </>
-  ),
+  component: () => {
+    useAnalytics();
+
+    return (
+      <>
+        <Outlet />
+      </>
+    )
+  },
 })
 
 const indexRoute = createRoute({
@@ -24,6 +27,7 @@ const indexRoute = createRoute({
     return withPageErrorBoundary(HomePage)({});
   },
 })
+
 
 const routeTree = rootRoute.addChildren([indexRoute])
 const router = createRouter({

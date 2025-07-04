@@ -20,13 +20,14 @@ const server = serve({
     "/api/v1/*": (req) => {
       return hono.fetch(req);
     },
-    // Serve static files from public folder
+
     "/static/*": (req) => {
       const url = new URL(req.url);
       const filePath = url.pathname.replace("/static/", "");
       const file = Bun.file(`public/${filePath}`);
       return new Response(file);
     },
+
     "/*": html,
   },
 

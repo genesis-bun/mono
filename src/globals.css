@@ -183,10 +183,10 @@
     scrollbar-width: thin;
   }
   body {
-    @apply bg-background text-foreground font-open-sans;
+    @apply bg-background text-foreground font-manrope;
   }
   h1, h2, h3 {
-    @apply font-semibold font-manrope;
+    @apply font-semibold;
   }
   button {
     @apply cursor-pointer;

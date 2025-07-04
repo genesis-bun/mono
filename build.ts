@@ -161,9 +161,9 @@ console.log("\n🚀 Starting build process...\n");
     .filter(dir => !dir.includes("node_modules"));
   console.log(`📄 Found ${entrypoints.length} HTML ${entrypoints.length === 1 ? "file" : "files"} to process\n`);
 
-  // Dynamically define process.env variables that should be inlined for the client
+  // ENV VARIABLES SUBSTITUTION FOR BROWSER
   const allEnvKeys = await getEnvKeys();
-  const clientEnvVariables = allEnvKeys.filter(key => key.startsWith("BUN_PUBLIC_") || key === "BUN_VERSION");
+  const clientEnvVariables = allEnvKeys.filter(key => key.startsWith("BUN_PUBLIC_"));
 
   const defineEnv: Record<string, string> = {
     "process.env.NODE_ENV": JSON.stringify("production"),

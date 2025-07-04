@@ -2,17 +2,11 @@ import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
 import { ThemeProvider } from "./lib/context/theme-provider";
 import { ErrorBoundary } from "./lib/components/errors/ErrorBoundary";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "./lib/context/query-client";
 import router from "./pages/app";
-import { toast, Toaster } from "sonner";
+import { Toaster } from "sonner";
 import { RouterProvider } from "@tanstack/react-router";
 import "./globals.css";
-
-// Tanstack Query
-const queryClient = new QueryClient();
-queryClient.defaultMutationOptions({
-  onError: ({ error }) => toast(error),
-});
 
 // Root element
 const rootElement = document.getElementById("root")!;
@@ -22,7 +16,7 @@ if (!rootElement) throw new Error("Failed to find the root element");
 const app = (
   <StrictMode>
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider>
         <ThemeProvider defaultTheme="dark" storageKey="theme">
           <RouterProvider router={router} />
           <Toaster position="bottom-right" />
