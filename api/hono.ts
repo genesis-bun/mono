@@ -4,8 +4,10 @@ import { logger } from "hono/logger";
 import { trimTrailingSlash } from "hono/trailing-slash";
 import { respond } from "@/api/lib/utils/respond";
 import { rateLimiter } from "hono-rate-limiter";
+import { cors } from "hono/cors";
 
 const hono = new Hono()
+  .use(cors())
   .use(logger())
   .use(trimTrailingSlash())
   .use(

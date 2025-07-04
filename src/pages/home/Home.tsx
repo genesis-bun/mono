@@ -1,39 +1,18 @@
 import { Button } from "@/src/lib/components/ui/button";
 import { useStorePersist } from "@/src/lib/hooks/use-store";
 import { motion } from "motion/react"
-import client from "@/src/lib/utils/api-client";
-import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
 import { cn } from "@/src/lib/utils";
+import { useApi } from "@/src/lib/hooks/use-api";
+import Upload from "@/src/lib/components/custom/Upload";
 
 export default function HomePage() {
     const { bears, setBears } = useStorePersist();
-    const { mutate, status, error } = useMutation({
-        mutationFn: () => {
-            return client.example.index.$get({
-                query: {
-                    name: "Genesis",
-                },
-            })
-        },
-        onSuccess: async (res) => {
-            const parsed = await res.json();
-
-            if (!parsed.success) {
-                throw new Error(parsed.error);
-            }
-
-            toast.success(`Response: ${parsed.data.name}`);
-        },
-        onError: (err) => {
-            console.error(err);
-            toast.error("Failed to fetch data");
-        }
-    });
+    const api = useApi();
+    const { mutate, status, error } = api.welcome;
 
     return (
         <div
-            className="flex flex-col items-center justify-center h-full gap-10"
+            className="h-full flex flex-col items-center justify-center"
         >
             <motion.div
                 initial={{ opacity: 0, scale: 0 }}
@@ -48,10 +27,8 @@ export default function HomePage() {
                     status === "success" && "bg-green-500",
                     error && "bg-red-500",
                 )}
-                onClick={() => { setBears(bears + 1); mutate(); }}
+                onClick={() => { setBears(bears + 1); mutate("Genesis"); }}
             />
-
-            <h1 className="text-4xl font-bold">Hello World!</h1>
 
             <motion.div
                 initial={{
@@ -61,7 +38,7 @@ export default function HomePage() {
                     opacity: 1
                 }}
                 className={cn(
-                    "mt-10 font-mono text-4xl font-bold tracking-widest text-amber-600",
+                    "mt-14 font-mono text-4xl font-bold tracking-widest text-amber-600",
                     status === "success" && "text-green-500",
                     error && "text-red-500"
                 )}
@@ -69,14 +46,13 @@ export default function HomePage() {
                 {bears}
             </motion.div>
 
-            <div className="flex gap-2">
-                <Button
-                    variant="secondary"
-                    onClick={() => setBears(0)}
-                >
-                    Reset
-                </Button>
-            </div>
+            <Button
+                variant="secondary"
+                onClick={() => setBears(0)}
+                className="mt-4"
+            >
+                Reset
+            </Button>
         </div>
     )
 }
