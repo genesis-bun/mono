@@ -67,6 +67,8 @@ export default function HomePage() {
                 {bears}
             </motion.div>
 
+            <img src="/static/img.png" alt="Image" className="rounded-full size-24 object-cover" />
+
             <div className="flex gap-2">
                 <Button
                     variant="secondary"

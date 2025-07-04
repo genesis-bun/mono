@@ -9,7 +9,7 @@ const server = serve({
     console: true,
   } : false,
 
-  idleTimeout: 255,
+  idleTimeout: 60,
 
   routes: {
     "/api": new Response(JSON.stringify({
