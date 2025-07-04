@@ -4,18 +4,28 @@
     "allowJs": true,
     "strictNullChecks": true,
     "strict": true,
-
     // Bundler mode
     "moduleResolution": "bundler",
     "module": "Preserve",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
-
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-    }
+      "@/*": [
+        "./*"
+      ],
+    },
+    "target": "ESNext",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

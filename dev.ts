@@ -9,6 +9,8 @@ const server = serve({
     console: true,
   } : false,
 
+  idleTimeout: 255,
+
   routes: {
     "/api": new Response(JSON.stringify({
       message: "Bun Server",
@@ -18,6 +20,13 @@ const server = serve({
     "/api/v1/*": (req) => {
       return hono.fetch(req);
     },
+    // Serve static files from public folder
+    "/static/*": (req) => {
+      const url = new URL(req.url);
+      const filePath = url.pathname.replace("/static/", "");
+      const file = Bun.file(`public/${filePath}`);
+      return new Response(file);
+    },
     "/*": html,
   },
 
@@ -26,6 +35,15 @@ const server = serve({
     if (req.url.includes("/api/v1")) {
       return hono.fetch(req);
     }
+
+    // Handle static files in fetch handler as well (for non-GET requests)
+    if (req.url.includes("/static/")) {
+      const url = new URL(req.url);
+      const filePath = url.pathname.replace("/static/", "");
+      const file = Bun.file(`public/${filePath}`);
+      return new Response(file);
+    }
+
     return new Response("Not Found", { status: 404 });
   },
 

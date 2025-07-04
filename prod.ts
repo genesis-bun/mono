@@ -1,6 +1,6 @@
+import dist from "./dist/index.html";
 import { serve } from "bun";
 import hono from "./api";
-import dist from "./dist/index.html";
 
 const server = serve({
   development: false,

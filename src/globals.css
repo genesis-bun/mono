@@ -2,11 +2,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 @import "tailwindcss";
-
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&: is(.dark *));
 
 :root {
   --background: hsl(0 0% 100%);

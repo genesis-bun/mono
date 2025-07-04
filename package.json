@@ -36,7 +36,7 @@
     "@tanstack/react-router": "^1.120.16",
     "@tanstack/react-router-devtools": "^1.120.16",
     "@types/moment": "^2.13.0",
-    "bun-plugin-tailwind": "^0.0.14",
+    "bun-plugin-tailwind": "^0.0.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
