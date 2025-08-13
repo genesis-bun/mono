@@ -6,12 +6,12 @@ A full-stack TypeScript template combining Bun runtime, Hono API framework, and 
 
 ### Create a new project
 ```bash
-bun create ishtails/genesis-react
+bun create genesis-bun/mono
 ```
 
 ### Change .env.template to .env
 ```bash
-mv .env.template .env
+cp .env.template .env
 ```
 ************
 ### Start development server
@@ -19,12 +19,12 @@ mv .env.template .env
 bun install && bun run dev
 ```
 
-### Build for production
+### For production
 ```bash
 bun install && bun run build && bun run start
 ```
 
-### Add shadcn/ui components
+### To add a new shadcn/ui components
 
 ```bash
 npx shadcn@latest add <component>
@@ -43,7 +43,7 @@ npx shadcn@latest add <component>
 
 ## Features
 
-- **Runtime**: Bun for fast package management and execution
+- **Runtime**: Bun as a package manager and runtime
 - **API**: Hono with type-safe RPC client for API calls
 - **Frontend**: React with TanStack Router
 - **Styling**: TailwindCSS v4 with shadcn/ui components
