@@ -8,9 +8,7 @@
 		"dev": "bun --hot dev.ts",
 		"start": "NODE_ENV=production bun prod.ts",
 		"build": "bun run build.ts",
-		"format": "bunx biome format --write",
-		"lint": "bunx biome lint --write",
-		"check": "bunx biome check --write"
+		"lint": "bunx biome check --write"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.7.6",

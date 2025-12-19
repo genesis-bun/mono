@@ -2,6 +2,12 @@ const envKeys = ["PUBLIC_SERVER_URL", "PORT", "DATABASE_URL"] as const;
 
 type ENV = Record<(typeof envKeys)[number], string>;
 
+declare module "bun" {
+	interface Env {
+		PUBLIC_SERVER_URL: string;
+	}
+}
+
 let env: ENV = {} as ENV;
 
 export function ensureEnv() {
