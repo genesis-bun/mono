@@ -15,9 +15,9 @@ try {
 	);
 	if (exists.rows.length === 0) {
 		await client.query(`CREATE DATABASE "${dbName}"`);
-		console.log(`Database '${dbName}' created: TRUE`);
+		console.log(`- Database '${dbName}' created: TRUE`);
 	} else {
-		console.log(`ℹDatabase '${dbName}' already exists.`);
+		console.log(`- Database '${dbName}' already exists.`);
 	}
 } catch (error) {
 	console.error("❌ Database error:", (error as Error).message);
