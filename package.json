@@ -6,6 +6,7 @@
 	"module": "prod.ts",
 	"scripts": {
 		"dev": "./scripts/shell/dev.sh",
+		"prod": "./scripts/shell/prod.sh",
 		"check": "bunx biome check --write",
 		"build": "bun lint && bun run build.ts",
 		"start": "NODE_ENV=production bun run prod.ts",
@@ -13,7 +14,8 @@
 		"serve:prod": "NODE_ENV=production bun run server.ts",
 		"generate": "bunx drizzle-kit generate",
 		"migrate": "bunx drizzle-kit migrate",
-		"push": "bunx drizzle-kit push"
+		"push": "bunx drizzle-kit push",
+		"shadcn": "bunx shadcn@latest add"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.7.6",
