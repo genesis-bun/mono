@@ -1,5 +1,5 @@
 import logo from "@assets/icons/logo.svg";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { Input } from "@/src/lib/components/ui/input";
 import { useApi } from "@/src/lib/hooks/use-api";

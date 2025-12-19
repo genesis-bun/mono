@@ -5,15 +5,15 @@
 	"main": "prod.ts",
 	"module": "prod.ts",
 	"scripts": {
-		"dev": "./dev.sh",
-		"lint": "bunx biome check --write",
+		"dev": "./scripts/shell/dev.sh",
+		"check": "bunx biome check --write",
 		"build": "bun lint && bun run build.ts",
 		"start": "NODE_ENV=production bun run prod.ts",
+		"serve:dev": "bun run server.ts",
+		"serve:prod": "NODE_ENV=production bun run server.ts",
 		"generate": "bunx drizzle-kit generate",
 		"migrate": "bunx drizzle-kit migrate",
-		"push": "bunx drizzle-kit push",
-		"serve:dev": "bun run server.ts",
-		"serve:prod": "NODE_ENV=production bun run server.ts"
+		"push": "bunx drizzle-kit push"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.7.6",

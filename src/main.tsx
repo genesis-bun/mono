@@ -19,7 +19,7 @@ const app = (
 			<QueryClientProvider>
 				<ThemeProvider defaultTheme="dark" storageKey="theme">
 					<RouterProvider router={router} />
-					<Toaster position="bottom-left" />
+					<Toaster position="bottom-left" theme="dark" />
 				</ThemeProvider>
 			</QueryClientProvider>
 		</ErrorBoundary>

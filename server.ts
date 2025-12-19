@@ -3,9 +3,7 @@ import hono from "@/api/hono";
 import { initializeEnv } from "@/env";
 import html from "@/src/index.html";
 
-// Validate environment before starting the server
 initializeEnv();
-
 const isDev = process.env.NODE_ENV !== "production";
 
 const server = serve({
@@ -18,7 +16,6 @@ const server = serve({
 	port: process.env.PORT,
 
 	routes: {
-		// Simple info route
 		"/api": new Response(
 			JSON.stringify({
 				message: "Bun Fullstack Server",
@@ -26,13 +23,11 @@ const server = serve({
 			}),
 		),
 
-		// Delegate API routes to existing Hono app
 		"/api/v1/*": (req) => hono.fetch(req),
 
 		"/*": html,
 	},
 
-	// Fallback for anything not matched above
 	fetch() {
 		return new Response("Not Found", { status: 404 });
 	},
@@ -44,6 +39,6 @@ const server = serve({
 });
 
 console.log(
-	`(${isDev ? "dev" : "prod"}) server is running at ${server.url} 🚀`,
+	`${isDev ? "Development" : "Production"} server is running at ${server.url} 🚀`,
 );
-console.log(`BUN VERSION: ${Bun.version}`);
+console.log(`Bun version: ${Bun.version}`);
