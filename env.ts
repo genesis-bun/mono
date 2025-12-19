@@ -44,7 +44,6 @@ export function getValidatedEnv(): EnvSchema {
 export function validateEnv(): EnvSchema {
 	try {
 		validatedEnv = envSchema.parse(Bun.env);
-		console.log("✅ Environment variables validated successfully");
 		return validatedEnv;
 	} catch (error) {
 		if (error instanceof z.ZodError) {
