@@ -1,7 +1,7 @@
 import { serve } from "bun";
-import hono from "./api";
+import hono from "@/api";
+import html from "@/src/index.html";
 import { env, initializeEnv } from "./env";
-import html from "./src/index.html";
 
 // Initialize environment variables
 initializeEnv();

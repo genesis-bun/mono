@@ -1,4 +1,4 @@
-import { cn } from "../../utils";
+import { cn } from "@/src/lib/utils";
 
 type Props = {
 	src?: string | null;

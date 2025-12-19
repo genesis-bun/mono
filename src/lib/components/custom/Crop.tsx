@@ -1,16 +1,19 @@
 import { useCallback, useMemo, useState } from "react";
 import Cropper from "react-easy-crop";
-import { Button } from "../ui/button";
+import Icon from "@/src/lib/components/custom/Icon";
+import { Button } from "@/src/lib/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-} from "../ui/dialog";
-import { Label } from "../ui/label";
-import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
-import Icon from "./Icon";
+} from "@/src/lib/components/ui/dialog";
+import { Label } from "@/src/lib/components/ui/label";
+import {
+	ToggleGroup,
+	ToggleGroupItem,
+} from "@/src/lib/components/ui/toggle-group";
 
 type AspectRatio =
 	| "square"

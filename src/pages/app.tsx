@@ -5,8 +5,8 @@ import {
 	Outlet,
 } from "@tanstack/react-router";
 import { withPageErrorBoundary } from "@/src/lib/components/custom/PageErrorBoundary";
-import { useAnalytics } from "../lib/hooks/use-analytics";
-import HomePage from "./home";
+import { useAnalytics } from "@/src/lib/hooks/use-analytics";
+import HomePage from "@/src/pages/home";
 
 const rootRoute = createRootRoute({
 	component: () => {

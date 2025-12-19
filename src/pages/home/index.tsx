@@ -1,14 +1,14 @@
 import { motion } from "motion/react";
+import { Image } from "@/src/lib/components/custom/Image";
 import { Button } from "@/src/lib/components/ui/button";
 import { useApi } from "@/src/lib/hooks/use-api";
-import { Image } from "../../lib/components/custom/Image";
 import Layout from "../layout";
 
 export default function Home() {
 	const { welcome } = useApi();
 	return (
 		<Layout>
-			<div className="min-h-full flex flex-col items-center justify-center bg-linear-to-br from-background to-muted/20 p-4">
+			<div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-background to-muted">
 				<motion.div
 					className="flex flex-col items-center justify-center text-center"
 					initial={{ opacity: 0, y: 20 }}
@@ -31,7 +31,7 @@ export default function Home() {
 							<Image
 								src="/static/logo.svg"
 								alt="Bun Logo"
-								className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 drop-shadow-lg"
+								className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 drop-shadow-md"
 							/>
 						</motion.div>
 
@@ -50,7 +50,7 @@ export default function Home() {
 						transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
 					>
 						<motion.h1
-							className="text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-foreground to-muted-foreground bg-clip-text text-transparent mb-4"
+							className="text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent mb-4"
 							transition={{ duration: 0.15 }}
 						>
 							Welcome

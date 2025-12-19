@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
+import Icon from "@/src/lib/components/custom/Icon";
+import { Button } from "@/src/lib/components/ui/button";
 import { useTheme } from "@/src/lib/context/theme-provider";
-import Icon from "../custom/Icon";
-import { Button } from "../ui/button";
 
 export default function ThemeSwitch() {
 	const { theme, setTheme } = useTheme();

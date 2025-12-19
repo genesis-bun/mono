@@ -1,8 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
 import type React from "react";
-import Icon from "../custom/Icon";
-import ThemeSwitch from "../custom/ThemeSwitch";
-import { Button } from "../ui/button";
+import Icon from "@/src/lib/components/custom/Icon";
+import ThemeSwitch from "@/src/lib/components/custom/ThemeSwitch";
+import { Button } from "@/src/lib/components/ui/button";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 interface PageErrorBoundaryProps {
@@ -20,7 +20,7 @@ const DefaultErrorFallback = () => {
 
 			<div className="relative w-full max-w-md p-8 overflow-hidden duration-500 border rounded-lg shadow-md bg-card border-border animate-in fade-in slide-in-from-bottom-4">
 				{/* Animated top border */}
-				<div className="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-transparent via-primary to-transparent animate-shimmer" />
+				<div className="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-transparent via-primary to-transparent" />
 
 				<div className="text-center">
 					<div className="inline-flex items-center justify-center w-20 h-20 mx-auto mb-6 duration-300 rounded-full bg-primary/10 text-primary animate-in zoom-in-50">
