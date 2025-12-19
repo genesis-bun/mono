@@ -2,120 +2,11 @@
 import { existsSync } from "node:fs";
 import { cp, rm } from "node:fs/promises";
 import path from "node:path";
-import { type BuildConfig, build } from "bun";
 import plugin from "bun-plugin-tailwind";
-import { envKeys } from "./env";
+import { envSchema } from "./env";
 
-// Print help text if requested
-if (process.argv.includes("--help") || process.argv.includes("-h")) {
-	console.log(`
-🏗️  Bun Build Script
+const outdir = path.join(process.cwd(), "dist");
 
-Usage: bun run build.ts [options]
-
-Common Options:
-  --outdir <path>          Output directory (default: "dist")
-  --minify                 Enable minification (or --minify.whitespace, --minify.syntax, etc)
-  --source-map <type>      Sourcemap type: none|linked|inline|external
-  --target <target>        Build target: browser|bun|node
-  --format <format>        Output format: esm|cjs|iife
-  --splitting              Enable code splitting
-  --packages <type>        Package handling: bundle|external
-  --public-path <path>     Public path for assets
-  --env <mode>             Environment handling: inline|disable|prefix*
-  --conditions <list>      Package.json export conditions (comma separated)
-  --external <list>        External packages (comma separated)
-  --banner <text>          Add banner text to output
-  --footer <text>          Add footer text to output
-  --define <obj>           Define global constants (e.g. --define.VERSION=1.0.0)
-  --help, -h               Show this help message
-
-Example:
-  bun run build.ts --outdir=dist --minify --source-map=linked --external=react,react-dom
-`);
-	process.exit(0);
-}
-
-// Helper function to convert kebab-case to camelCase
-const toCamelCase = (str: string): string => {
-	return str.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-};
-
-// Helper function to parse a value into appropriate type
-const parseValue = (value: string): string | number | boolean | string[] => {
-	// Handle true/false strings
-	if (value === "true") return true;
-	if (value === "false") return false;
-
-	// Handle numbers
-	if (/^\d+$/.test(value)) return parseInt(value, 10);
-	if (/^\d*\.\d+$/.test(value)) return parseFloat(value);
-
-	// Handle arrays (comma-separated)
-	if (value.includes(",")) return value.split(",").map((v) => v.trim());
-
-	// Default to string
-	return value;
-};
-
-// Magical argument parser that converts CLI args to BuildConfig
-function parseArgs(): Partial<BuildConfig> {
-	const config: Record<
-		string,
-		string | number | boolean | string[] | Record<string, unknown>
-	> = {};
-	const args = process.argv.slice(2);
-
-	for (let i = 0; i < args.length; i++) {
-		const arg = args[i];
-		if (!arg.startsWith("--")) continue;
-
-		// Handle --no-* flags
-		if (arg.startsWith("--no-")) {
-			const key = toCamelCase(arg.slice(5));
-			config[key] = false;
-			continue;
-		}
-
-		// Handle --flag (boolean true)
-		if (
-			!arg.includes("=") &&
-			(i === args.length - 1 || args[i + 1].startsWith("--"))
-		) {
-			const key = toCamelCase(arg.slice(2));
-			config[key] = true;
-			continue;
-		}
-
-		// Handle --key=value or --key value
-		let key: string;
-		let value: string;
-
-		if (arg.includes("=")) {
-			[key, value] = arg.slice(2).split("=", 2);
-		} else {
-			key = arg.slice(2);
-			value = args[++i];
-		}
-
-		// Convert kebab-case key to camelCase
-		key = toCamelCase(key);
-
-		// Handle nested properties (e.g. --minify.whitespace)
-		if (key.includes(".")) {
-			const [parentKey, childKey] = key.split(".");
-			config[parentKey] = config[parentKey] || {};
-			(config[parentKey] as Record<string, unknown>)[childKey] =
-				parseValue(value);
-		} else {
-			config[key] = parseValue(value);
-		}
-	}
-
-	return config as Partial<BuildConfig>;
-}
-
-// Helper function to format file sizes
 const formatFileSize = (bytes: number): string => {
 	const units = ["B", "KB", "MB", "GB"];
 	let size = bytes;
@@ -129,64 +20,49 @@ const formatFileSize = (bytes: number): string => {
 	return `${size.toFixed(2)} ${units[unitIndex]}`;
 };
 
-console.log("\n🚀 Starting build process...\n");
-
-// Wrap async code in IIFE to avoid top-level await issues
-(async () => {
-	// Parse CLI arguments with our magical parser
-	const cliConfig = parseArgs();
-	const outdir = cliConfig.outdir || path.join(process.cwd(), "dist");
-
+await (async () => {
+	// Clean existing dist
 	if (existsSync(outdir)) {
-		console.log(`🗑️ Cleaning previous build at ${outdir}`);
+		console.log(`🗑️  Cleaning previous build at ${outdir}`);
 		await rm(outdir, { recursive: true, force: true });
 	}
 
+	// Discover HTML entrypoints under src/
+	const entrypoints = Array.from(new Bun.Glob("**.html").scanSync("src"))
+		.map((p) => path.resolve("src", p))
+		.filter((p) => !p.includes("node_modules"));
+
+	console.log(
+		`📄 Found ${entrypoints.length} HTML ${
+			entrypoints.length === 1 ? "file" : "files"
+		} to bundle\n`,
+	);
+
 	const start = performance.now();
 
-	// Scan for all HTML files in the project
-	const entrypoints = Array.from(new Bun.Glob("**.html").scanSync("src"))
-		.map((a) => path.resolve("src", a))
-		.filter((dir) => !dir.includes("node_modules"));
+	// Use envSchema only to know which keys exist; actual injection is via env: "PUBLIC_*"
+	const envKeys = Object.keys(envSchema.shape);
+	const clientEnvKeys = envKeys.filter((key) => key.startsWith("PUBLIC_"));
 	console.log(
-		`📄 Found ${entrypoints.length} HTML ${entrypoints.length === 1 ? "file" : "files"} to process\n`,
+		`🌱 PUBLIC_* env keys considered for browser: ${clientEnvKeys.join(", ") || "(none)"}`,
 	);
 
-	// ENV VARIABLES SUBSTITUTION FOR BROWSER
-	const clientEnvVariables = envKeys.filter((key: string) =>
-		key.startsWith("BUN_PUBLIC_"),
-	);
-
-	const defineEnv: Record<string, string> = {
-		"process.env.NODE_ENV": JSON.stringify("production"),
-	};
-
-	for (const envKey of clientEnvVariables) {
-		if (process.env[envKey] !== undefined) {
-			defineEnv[`process.env.${envKey}`] = JSON.stringify(process.env[envKey]);
-		} else {
-			console.warn(
-				`⚠️ Warning: Environment variable ${envKey} is not set. It will be defined as undefined in the client bundle.`,
-			);
-			defineEnv[`process.env.${envKey}`] = JSON.stringify(undefined);
-		}
-	}
-
-	// Build all the HTML files
-	const result = await build({
+	const result = await Bun.build({
 		entrypoints,
 		outdir,
-		plugins: [plugin],
+		target: "bun",
 		minify: true,
-		target: "browser",
 		sourcemap: "linked",
-		define: defineEnv,
-		...cliConfig, // Merge in any CLI-provided options
+		env: "PUBLIC_*", // Bun-native env inlining for PUBLIC_* vars
+		define: {
+			"process.env.NODE_ENV": JSON.stringify("production"),
+		},
+		plugins: [plugin],
 	});
 
-	// Print the results
 	const end = performance.now();
 
+	// Print output table
 	const outputTable = result.outputs.map((output) => ({
 		File: path.relative(process.cwd(), output.path),
 		Type: output.kind,
@@ -194,19 +70,17 @@ console.log("\n🚀 Starting build process...\n");
 	}));
 
 	console.table(outputTable);
-	const buildTime = (end - start).toFixed(2);
+	console.log(`⏱️  Build completed in ${(end - start).toFixed(2)}ms\n`);
 
-	// Copy public directory contents to dist/static
+	// Copy ./public into ./dist/static (for assets not going through the bundler)
 	const publicDir = path.join(process.cwd(), "public");
 	if (existsSync(publicDir)) {
-		console.log("📁 Copying public directory contents to dist...");
+		console.log("📁 Copying public directory contents to dist/static...");
 		try {
 			await cp(publicDir, path.join(outdir, "static"), { recursive: true });
-			console.log("✅ Public files copied successfully");
+			console.log("✅ Public files copied successfully\n");
 		} catch (error) {
 			console.error("❌ Error copying public files:", error);
 		}
 	}
-
-	console.log(`\n✅ Build completed in ${buildTime}ms\n`);
 })();

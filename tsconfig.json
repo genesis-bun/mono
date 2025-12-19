@@ -12,7 +12,8 @@
 		"noEmit": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./*"]
+			"@/*": ["./*"],
+			"@assets/*": ["./src/assets/*"]
 		},
 		"target": "ESNext",
 		"skipLibCheck": true,

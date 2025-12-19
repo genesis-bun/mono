@@ -1,9 +1,10 @@
 import { hc } from "hono/client";
-import type { ExampleType } from "@/api/routes/example";
+import type { WelcomeType } from "@/api/routes/welcome.route";
 
 const baseUrl = process.env.PUBLIC_SERVER_URL;
+
 const client = {
-	example: hc<ExampleType>(`${baseUrl}/example`),
+	welcome: hc<WelcomeType>(`${baseUrl}/welcome`),
 };
 
 export default client;

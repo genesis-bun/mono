@@ -1,3 +1,5 @@
+// LEGACY (TO BE REMOVED)
+
 import path from "node:path";
 
 // Helper function to get MIME type based on file extension

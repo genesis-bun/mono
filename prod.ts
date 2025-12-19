@@ -1,16 +1,18 @@
+// LEGACY (TO BE REMOVED)
+
 import { existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { serve } from "bun";
-import hono from "./api";
-import { env, initializeEnv } from "./env";
-import { getMimeType } from "./utils";
+import hono from "@/api/hono";
+import { initializeEnv } from "@/env";
+import { getMimeType } from "@/utils";
 
-// Initialize environment variables
+// ENV Check
 initializeEnv();
 
 const server = serve({
 	development: false,
-	port: parseInt(env.PORT, 10),
+	port: process.env.PORT,
 
 	routes: {
 		"/api": new Response(
@@ -183,4 +185,3 @@ const server = serve({
 
 console.log(`Prod server running at ${server.url} 🚀`);
 console.log(`BUN VERSION: ${Bun.version}`);
-console.log(`ENV: ${JSON.stringify(env)}`);

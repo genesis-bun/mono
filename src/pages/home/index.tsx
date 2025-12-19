@@ -1,11 +1,15 @@
+import logo from "@assets/icons/logo.svg";
 import { motion } from "motion/react";
+import { useState } from "react";
 import { Image } from "@/src/lib/components/custom/Image";
-import { Button } from "@/src/lib/components/ui/button";
+import { Input } from "@/src/lib/components/ui/input";
 import { useApi } from "@/src/lib/hooks/use-api";
 import Layout from "../layout";
 
 export default function Home() {
 	const { welcome } = useApi();
+	const [message, setMessage] = useState("");
+
 	return (
 		<Layout>
 			<div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-background to-muted">
@@ -29,7 +33,7 @@ export default function Home() {
 							}}
 						>
 							<Image
-								src="/static/logo.svg"
+								src="/static/image.png"
 								alt="Bun Logo"
 								className="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 drop-shadow-md"
 							/>
@@ -43,7 +47,7 @@ export default function Home() {
 						/>
 					</div>
 
-					{/* Welcome text with fade-in animation */}
+					{/* Fancy Input Box */}
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -64,15 +68,31 @@ export default function Home() {
 							Your new site is ready to hop into action
 						</motion.p>
 						<motion.div
-							onClick={() => welcome.mutate("World")}
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.2, delay: 0.5 }}
 							className="mt-6"
 						>
-							<Button disabled={welcome.isPending} variant="primary" size="lg">
-								Say Hello
-							</Button>
+							<Input
+								value={message}
+								onChange={(e) => setMessage(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" && message.trim()) {
+										welcome.mutate(message.trim());
+										setMessage("");
+									}
+								}}
+								onSubmit={() => {
+									if (message.trim()) {
+										welcome.mutate(message.trim());
+										setMessage("");
+									}
+								}}
+								disabled={welcome.isPending}
+								placeholder="Let's start with your name!"
+								className="max-w-md mx-auto"
+								withSubmitIcon
+							/>
 						</motion.div>
 					</motion.div>
 				</motion.div>

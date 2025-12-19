@@ -6,8 +6,8 @@ export function useApi() {
 	return {
 		welcome: useMutation({
 			mutationFn: async (name: string) => {
-				const result = await client.example.index.$get({
-					query: {
+				const result = await client.welcome.index.$post({
+					json: {
 						name,
 					},
 				});
@@ -18,14 +18,12 @@ export function useApi() {
 					throw new Error(parsed.error);
 				}
 
+				toast.success(`${parsed.message}`);
 				return parsed.data;
-			},
-			onSuccess: (res) => {
-				toast.success(`Success: ${res.name}`);
 			},
 			onError: (err) => {
 				console.error(err);
-				toast.error("Failed to fetch data");
+				toast.error(err.message);
 			},
 		}),
 	};

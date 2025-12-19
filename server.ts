@@ -1,46 +1,39 @@
-// LEGACY (TO BE REMOVED)
-
 import { serve } from "bun";
 import hono from "@/api/hono";
 import { initializeEnv } from "@/env";
 import html from "@/src/index.html";
 
-// ENV Check
+// Validate environment before starting the server
 initializeEnv();
 
+const isDev = process.env.NODE_ENV !== "production";
+
 const server = serve({
-	development: {
-		hmr: true,
-		console: true,
-	},
+	development: isDev
+		? {
+				hmr: true,
+				console: true,
+			}
+		: false,
 	port: process.env.PORT,
-	idleTimeout: 60,
 
 	routes: {
-		// API routes
+		// Simple info route
 		"/api": new Response(
 			JSON.stringify({
-				message: "Bun Server",
+				message: "Bun Fullstack Server",
 				version: "v1.0.0",
 			}),
 		),
-		"/api/v1/*": (req) => hono.fetch(req),
 
-		"/static/*": (req) => {
-			const url = new URL(req.url);
-			const filePath = url.pathname.replace("/assets/", "");
-			const file = Bun.file(`public/${filePath}`);
-			return new Response(file);
-		},
+		// Delegate API routes to existing Hono app
+		"/api/v1/*": (req) => hono.fetch(req),
 
 		"/*": html,
 	},
 
-	fetch(req) {
-		if (req.url.includes("/api/v1")) {
-			return hono.fetch(req);
-		}
-
+	// Fallback for anything not matched above
+	fetch() {
 		return new Response("Not Found", { status: 404 });
 	},
 
@@ -50,5 +43,7 @@ const server = serve({
 	},
 });
 
-console.log(`Dev server running at ${server.url} 🚀`);
+console.log(
+	`(${isDev ? "dev" : "prod"}) server is running at ${server.url} 🚀`,
+);
 console.log(`BUN VERSION: ${Bun.version}`);

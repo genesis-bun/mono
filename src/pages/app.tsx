@@ -11,7 +11,6 @@ import HomePage from "@/src/pages/home";
 const rootRoute = createRootRoute({
 	component: () => {
 		useAnalytics();
-
 		return <Outlet />;
 	},
 });
@@ -24,7 +23,15 @@ const indexRoute = createRoute({
 	},
 });
 
-const routeTree = rootRoute.addChildren([indexRoute]);
+const newRoute = createRoute({
+	getParentRoute: () => rootRoute,
+	path: "/new",
+	component: function Index() {
+		return withPageErrorBoundary(HomePage)({});
+	},
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, newRoute]);
 const router = createRouter({
 	routeTree,
 });

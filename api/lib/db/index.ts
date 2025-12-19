@@ -1,11 +1,15 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-import { env } from "@/env";
+import { users } from "./schema/users";
 
 const db = drizzle({
 	connection: {
-		connectionString: env.DATABASE_URL,
-		ssl: true,
+		connectionString: process.env.DATABASE_URL,
 	},
+	casing: "snake_case",
 });
 
-export default db;
+const schema = {
+	users,
+};
+
+export { db, schema };

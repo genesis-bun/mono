@@ -2,11 +2,11 @@ import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "sonner";
-import { ErrorBoundary } from "./lib/components/custom/ErrorBoundary";
-import { QueryClientProvider } from "./lib/context/query-client";
-import { ThemeProvider } from "./lib/context/theme-provider";
-import router from "./pages/app";
-import "./globals.css";
+import { ErrorBoundary } from "@/src/lib/components/custom/ErrorBoundary";
+import { QueryClientProvider } from "@/src/lib/context/query-client";
+import { ThemeProvider } from "@/src/lib/context/theme-provider";
+import router from "@/src/pages/app";
+import "@/src/globals.css";
 
 // Root element
 const rootElement = document.getElementById("root");
