@@ -1,8 +1,11 @@
 declare module "*.svg" {
-  const content: string;
-  export default content;
+	const content: string;
+	export default content;
 }
 
+// Global type declarations
 interface Window {
-  gtag?: (...args: any[]) => void;
+	gtag?: (...args: unknown[]) => void;
 }
+
+const _window: Window = window;

@@ -1,43 +1,38 @@
 import {
-  Outlet,
-  createRouter,
-  createRoute,
-  createRootRoute,
-} from '@tanstack/react-router'
-import { withPageErrorBoundary } from "@/src/lib/components/errors/PageErrorBoundary";
+	createRootRoute,
+	createRoute,
+	createRouter,
+	Outlet,
+} from "@tanstack/react-router";
+import { withPageErrorBoundary } from "@/src/lib/components/custom/PageErrorBoundary";
+import { useAnalytics } from "../lib/hooks/use-analytics";
 import HomePage from "./home";
-import { useAnalytics } from '../lib/hooks/use-analytics';
 
 const rootRoute = createRootRoute({
-  component: () => {
-    useAnalytics();
+	component: () => {
+		useAnalytics();
 
-    return (
-      <>
-        <Outlet />
-      </>
-    )
-  },
-})
+		return <Outlet />;
+	},
+});
 
 const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/',
-  component: function Index() {
-    return withPageErrorBoundary(HomePage)({});
-  },
-})
+	getParentRoute: () => rootRoute,
+	path: "/",
+	component: function Index() {
+		return withPageErrorBoundary(HomePage)({});
+	},
+});
 
-
-const routeTree = rootRoute.addChildren([indexRoute])
+const routeTree = rootRoute.addChildren([indexRoute]);
 const router = createRouter({
-  routeTree,
-})
-  
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
+	routeTree,
+});
+
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: typeof router;
+	}
 }
 
 export default router;
