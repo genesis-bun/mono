@@ -50,5 +50,5 @@ const server = serve({
 	},
 });
 
-console.log(`Dev server running at ${server.url} 🚀`);
+console.log(`Development server running at ${server.url} 🚀 (Legacy)`);
 console.log(`BUN VERSION: ${Bun.version}`);

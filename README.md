@@ -35,19 +35,20 @@ cp .env.template .env
 
 ### Development
 ```bash
-bun dev          # runs server.ts in development mode
+bun run dev          # sets up database, pushes schema, checks code, starts development server with HMR
+bun run dev:legacy   # runs legacy development mode (dev.ts)
 ```
 
 ### Production
 ```bash
-# Bun's Native (Recommended)
-bun prod        # builds & runs server.ts directly using bun
+bun run start        # runs production server
+bun run start:legacy # runs legacy production mode (prod.ts)
+```
 
-OR
-
-# Bundle & Serve (Legacy)
-bun run build   # builds with build.ts
-bun start       # serves dist with prod.ts
+### Deployment
+```bash
+bun run deploy       # deployment: installs deps, creates db, pushes schema, checks code, starts production server
+bun run deploy:legacy # deployment with legacy build process
 ```
 
 ## 🏗️ Architecture
@@ -92,25 +93,32 @@ bun start       # serves dist with prod.ts
 
 ## 📝 Scripts
 
+### Main Commands
 ```bash
-bun dev              # Spins up a development server with HMR
-bun prod             # Builds & runs server.ts directly using bun
-bun check            # Lint & format code automatically using Biome
-bun push             # Push schema changes to DB using Drizzle Kit (Generate + Migrate)
+bun run dev              # Development: creates database, pushes schema, checks code, starts dev server
+bun run dev:legacy       # Legacy development mode
+bun run start            # Production: runs optimized production server
+bun run start:legacy     # Legacy production mode
+bun run deploy           # Full deployment: installs deps, creates db, pushes schema, checks code, starts prod server
+bun run deploy:legacy    # Full deployment with legacy build process
+```
 
-bun generate         # Generate database types using Drizzle Kit (Useful for prod)
-bun migrate          # Run database migrations using Drizzle Kit (Useful for prod)
-bun run build        # Legacy: Builds with build.ts
-bun start            # Legacy: Serves with prod.ts
-bun shadcn           # Interactive component picker
+### Utility Commands
+```bash
+bun run check            # Lint & format code automatically using Biome
+bun run push             # Push schema changes to DB using Drizzle Kit
+bun run generate         # Generate database types using Drizzle Kit
+bun run migrate          # Run database migrations using Drizzle Kit
+bun run build            # Legacy: builds with build.ts
+bun run shadcn           # Interactive component picker
 ```
 
 ## 🔧 Customization
 
 ### Add UI Components
 ```bash
-bun shadcn button  # Add specific component
-bun shadcn         # Interactive component picker
+bun run shadcn button  # Add specific component
+bun run shadcn         # Interactive component picker
 ```
 
 ### Add API Routes

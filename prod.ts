@@ -41,5 +41,5 @@ const server = serve({
 	},
 });
 
-console.log(`Server running at ${server.url} 🚀`);
-console.log(`BUN VERSION: ${Bun.version}`);
+console.log(`Production server (legacy) is running on ${server.url} 🚀`);
+console.log(`Bun version: ${Bun.version}`);
