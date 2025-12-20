@@ -11,14 +11,11 @@
 		"start:legacy": "./scripts/shell/prod.sh --legacy",
 		"deploy": "./scripts/shell/deploy.sh",
 		"deploy:legacy": "./scripts/shell/deploy.sh --legacy",
-
 		"check": "bunx biome check --write",
 		"build": "bun run build.ts",
-
 		"generate": "bunx drizzle-kit generate",
 		"migrate": "bunx drizzle-kit migrate",
 		"push": "bunx drizzle-kit push",
-
 		"shadcn": "bunx shadcn@latest add"
 	},
 	"dependencies": {
