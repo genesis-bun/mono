@@ -1,6 +1,8 @@
 import logo from "@assets/icons/logo.svg";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import Icon from "@/src/lib/components/custom/Icon";
+import { Button } from "@/src/lib/components/ui/button";
 import { Input } from "@/src/lib/components/ui/input";
 import { useApi } from "@/src/lib/hooks/use-api";
 import { useUserStore } from "@/src/lib/hooks/use-store";
@@ -14,6 +16,25 @@ export default function Home() {
 
 	return (
 		<Layout>
+			{/* Floating Star Badge */}
+			<motion.div
+				className="fixed top-4 right-4 z-50"
+				initial={{ opacity: 0, y: -20 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.2 }}
+			>
+				<Button asChild variant="primary">
+					<a
+						href="https://github.com/genesis-bun/mono"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<Icon name="Star" className="size-4" fill="currentColor" />
+						<span>Star the repo</span>
+					</a>
+				</Button>
+			</motion.div>
+
 			<div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-background to-muted">
 				<motion.div
 					className="flex flex-col items-center justify-center text-center"
@@ -50,24 +71,23 @@ export default function Home() {
 
 					{/* Fancy Input Box */}
 					<motion.div
-						layout
 						initial={{ opacity: 0, y: 10 }}
 						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+						transition={{ duration: 0.2, delay: 0.5, ease: "easeOut" }}
 					>
 						<motion.h1
-							className="text-4xl md:text-5xl lg:text-6xl font-bold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent mb-4 font-manrope"
-							transition={{ duration: 0.15 }}
+							className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 font-manrope"
+							transition={{ duration: 0.1 }}
 						>
-							Hey, There!
+							Hi, There!
 						</motion.h1>
 						<motion.p
 							className="text-lg md:text-xl text-muted-foreground max-w-md mx-auto"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
-							transition={{ duration: 0.6, delay: 0.5 }}
+							transition={{ duration: 0.4, delay: 0.5 }}
 						>
-							Your new app is ready to go!
+							Nice day for webbin', ain't it?
 						</motion.p>
 						<AnimatePresence mode="wait">
 							{!user ? (
@@ -77,7 +97,7 @@ export default function Home() {
 									initial={{ opacity: 0, y: 10 }}
 									animate={{ opacity: 1, y: 0 }}
 									exit={{ opacity: 0, y: -30 }}
-									transition={{ duration: 0.2, ease: "easeOut" }}
+									transition={{ duration: 0.4, ease: "easeOut" }}
 									className="mt-6"
 								>
 									<Input
@@ -115,6 +135,17 @@ export default function Home() {
 								</motion.div>
 							)}
 						</AnimatePresence>
+
+						<motion.p
+							className="text-sm mt-4 italic text-muted-foreground mx-auto"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.4, delay: 0.7 }}
+						>
+							Get started by editing the{" "}
+							<code className="inline-block">src/pages/home/index.tsx</code>{" "}
+							file.
+						</motion.p>
 					</motion.div>
 				</motion.div>
 			</div>

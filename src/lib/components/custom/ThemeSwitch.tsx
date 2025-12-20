@@ -16,7 +16,7 @@ export default function ThemeSwitch() {
 			}}
 		>
 			<Button
-				variant="secondary"
+				variant="primary"
 				size="icon"
 				onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
 			>
