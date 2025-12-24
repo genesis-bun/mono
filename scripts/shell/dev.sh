@@ -1,10 +1,6 @@
 #!/bin/bash
 clear;
 
-echo "🗄️ Creating database..."
-bun run scripts/application/create-db.ts
-echo
-
 echo "⬆️ Pushing schema to database..."
 bun push
 echo

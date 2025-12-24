@@ -131,3 +131,4 @@ dist/
 
 # Drizzle
 drizzle/
+*.db

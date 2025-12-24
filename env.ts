@@ -1,14 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-	DATABASE_URL: z.string().refine((val) => {
-		try {
-			new URL(val);
-			return true;
-		} catch {
-			return false;
-		}
-	}, "DATABASE_URL must be a valid URL"),
+	DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
 	PUBLIC_SERVER_URL: z.string().refine((val) => {
 		try {
 			new URL(val);

@@ -16,13 +16,8 @@ export const zJsonString = () =>
 export const zNumberString = () =>
 	z
 		.string()
-		.refine((value) => {
-			try {
-				Number(value);
-				return true;
-			} catch (_) {
-				return false;
-			}
+		.refine((value) => !Number.isNaN(Number(value)), {
+			message: "Must be a valid number string",
 		})
 		.transform((value) => Number(value));
 
