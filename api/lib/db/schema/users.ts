@@ -1,11 +1,10 @@
-import * as t from "drizzle-orm/pg-core";
-import { pgTable as table } from "drizzle-orm/pg-core";
+import * as t from "drizzle-orm/sqlite-core";
 import { generateUniqueSlug, timestamps } from "@/api/lib/utils/schema";
 
-export const users = table("users", {
-	id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
-	name: t.varchar("name", { length: 256 }),
-	slug: t.varchar().$default(() => generateUniqueSlug(16)),
+export const users = t.sqliteTable("users", {
+	id: t.integer().primaryKey({ autoIncrement: true }),
+	name: t.text("name"),
+	slug: t.text().$default(() => generateUniqueSlug(16)),
 	...timestamps,
 });
 
