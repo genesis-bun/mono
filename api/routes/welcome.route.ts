@@ -7,6 +7,9 @@ import { respond } from "@/api/lib/utils/respond";
 import { zNumberString } from "../lib/utils/zod";
 
 const welcome = new Hono()
+	.get("/", async (ctx) => {
+		return respond.ok(ctx, {}, "Welcome to the club! 🎉", 200);
+	})
 	.post(
 		"/",
 		zValidator(

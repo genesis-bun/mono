@@ -8,13 +8,13 @@ export function useApi() {
 	return {
 		welcome: useMutation({
 			mutationFn: async (name: string) => {
-				const result = await client.welcome.index.$post({
+				const res = await client.welcome.index.$post({
 					json: {
 						name,
 					},
 				});
 
-				const parsed = await result.json();
+				const parsed = await res.json();
 
 				if (!parsed.success) {
 					throw new Error(parsed.error);

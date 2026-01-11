@@ -27,12 +27,8 @@ const app = (
 );
 
 // Hot module replacement
-if (import.meta.hot) {
-	let root = import.meta.hot.data.root;
-	if (!root) {
-		root = import.meta.hot.data.root = createRoot(rootElement);
-	}
-	root.render(app);
-} else {
-	createRoot(rootElement).render(app);
+if (!import.meta.hot.data.root) {
+	import.meta.hot.data.root = createRoot(rootElement);
 }
+const root = import.meta.hot.data.root;
+root.render(app);
