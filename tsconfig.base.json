@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		/* Language */
+		"target": "ESNext",
+		"module": "Preserve",
+		"moduleDetection": "force",
+
+		/* Resolution */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+
+		/* Strictness */
+		"strict": true,
+		"skipLibCheck": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+
+		/* Clean builds */
+		"noEmit": true,
+
+		/* Good defaults for monorepos */
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true
+	}
+}

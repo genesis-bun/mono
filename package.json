@@ -1,0 +1,24 @@
+{
+	"name": "mono",
+	"type": "module",
+	"private": true,
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"check": "bunx biome check --write .",
+		"purge": "bash ./scripts/purge.sh",
+		"contracts:compile": "bun run --filter @kex/contracts build",
+		"contracts:test": "bun run --filter @kex/contracts test",
+		"web:dev": "bun run --filter @kex/web dev",
+		"web:start": "bun run --filter @kex/web start",
+		"web:build": "bun run --filter @kex/web build",
+		"web:deploy": "bun run --filter @kex/web deploy"
+	},
+	"devDependencies": {
+		"@types/node": "^25",
+		"@biomejs/biome": "^2",
+		"@types/bun": "latest",
+		"typescript": "^5"
+	}
+}
