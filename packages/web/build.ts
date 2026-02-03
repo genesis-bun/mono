@@ -38,8 +38,9 @@ const outputTable = result.outputs.map((output) => ({
 console.table(outputTable);
 console.log(`🚀 Build Time: ${(end - start).toFixed(2)}ms`);
 
-// Copy the public directory if exists
 const publicDir = path.join(process.cwd(), "public");
 if (existsSync(publicDir)) {
-	await cp(publicDir, path.join(outdir, "assets"), { recursive: true });
+	await cp(publicDir, path.join(outdir), {
+		recursive: true,
+	});
 }

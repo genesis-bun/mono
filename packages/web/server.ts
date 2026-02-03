@@ -18,7 +18,7 @@ const server = serve({
 	routes: {
 		"/api": new Response(
 			JSON.stringify({
-				message: "Bun Fullstack Server",
+				message: "Bun Web Server",
 				version: "v1.0.0",
 			}),
 		),
@@ -26,10 +26,6 @@ const server = serve({
 		"/api/v1/*": (req) => hono.fetch(req),
 
 		"/*": html,
-	},
-
-	fetch() {
-		return new Response("Not Found", { status: 404 });
 	},
 
 	error(error) {

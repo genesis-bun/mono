@@ -1,4 +1,3 @@
-import logo from "@assets/icons/logo.svg";
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { Button } from "../components/ui/button";
@@ -15,11 +14,11 @@ export default function NotFoundPage() {
 					transition={{ duration: 0.3, ease: "easeOut" }}
 				>
 					<div className="space-y-4">
-						<img
+						{/* <img
 							src={logo}
 							alt="Logo"
 							className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 drop-shadow-md object-contain mx-auto mb-4"
-						/>
+						/> */}
 						<p className="text-xs uppercase tracking-[0.17em] text-muted-foreground/80">
 							Oops, page not found
 						</p>

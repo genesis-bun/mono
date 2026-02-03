@@ -1,5 +1,5 @@
 import * as t from "drizzle-orm/sqlite-core";
-import { generateUniqueSlug, timestamps } from "@/api/lib/utils/schema";
+import { generateUniqueSlug, timestamps } from "@/api/lib/utils/sql";
 
 export const users = t.sqliteTable("users", {
 	id: t.integer().primaryKey({ autoIncrement: true }),
