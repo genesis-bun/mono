@@ -8,12 +8,12 @@
 	"scripts": {
 		"check": "bunx biome check --write .",
 		"purge": "bash ./scripts/purge.sh",
-		"contracts:compile": "bun run --filter @kex/contracts build",
-		"contracts:test": "bun run --filter @kex/contracts test",
-		"web:dev": "bun run --filter @kex/web dev",
-		"web:start": "bun run --filter @kex/web start",
-		"web:build": "bun run --filter @kex/web build",
-		"web:deploy": "bun run --filter @kex/web deploy"
+		"contracts:compile": "bun run --filter @mono/contracts build",
+		"contracts:test": "bun run --filter @mono/contracts test",
+		"web:dev": "bun run --filter @mono/web dev",
+		"web:start": "bun run --filter @mono/web start",
+		"web:build": "bun run --filter @mono/web build",
+		"web:deploy": "bun run --filter @mono/web deploy"
 	},
 	"devDependencies": {
 		"@types/node": "^25",
