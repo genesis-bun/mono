@@ -7,7 +7,7 @@
 	],
 	"scripts": {
 		"check": "bunx biome check --write .",
-		"purge": "bash ./scripts/purge.sh",
+		"purge": "./scripts/purge.sh",
 		"contracts:compile": "bun run --filter @mono/contracts build",
 		"contracts:test": "bun run --filter @mono/contracts test",
 		"web:dev": "bun run --filter @mono/web dev",
